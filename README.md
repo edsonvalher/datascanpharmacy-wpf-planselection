@@ -662,7 +662,7 @@ flowchart TD
 <details>
 <summary><strong>MVVM Structure</strong></summary>
 
-[View](Features/PlanSelection/Documentation/v1/diagrams/mvvm.svg)
+[View](/StandAlonePlan/StandAlonePlan/Features/PlanSelection/Documentation/v1/diagrams/mvvm.svg)
 
 </details>
 
