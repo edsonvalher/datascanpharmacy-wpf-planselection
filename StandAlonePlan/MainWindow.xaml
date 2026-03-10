@@ -1,0 +1,70 @@
+<Window x:Class="StandAlonePlan.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Plan Selection — Demo Launcher"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Width="430"
+        Height="295"
+        FontSize="13">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Patient Scenario -->
+        <TextBlock Grid.Row="0"
+                   Text="Patient Scenario"
+                   FontWeight="Bold"
+                   Margin="0,0,0,6"/>
+        <StackPanel Grid.Row="1" Margin="8,0,0,0">
+            <RadioButton x:Name="rbPatient1"
+                         Content="Patient 1 — Happy Path: 3 active plans (BCBS · Medicare · Medicaid)"
+                         IsChecked="True"
+                         FontSize="12"
+                         Margin="0,2"/>
+            <RadioButton x:Name="rbPatient2"
+                         Content="Patient 2 — Edge Cases: expired plan + disabled plan"
+                         FontSize="12"
+                         Margin="0,2"/>
+            <RadioButton x:Name="rbPatient3"
+                         Content="Patient 3 — Pagination: 12 plans (Prev / Next navigation)"
+                         FontSize="12"
+                         Margin="0,2"/>
+        </StackPanel>
+
+        <!-- Mode Override -->
+        <TextBlock Grid.Row="3"
+                   Text="Run Mode"
+                   FontWeight="Bold"
+                   Margin="0,0,0,6"/>
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal"
+                    Margin="8,0,0,0">
+            <RadioButton x:Name="rbModeNormal"
+                         Content="Normal (N)"
+                         IsChecked="True"
+                         Margin="0,0,18,0"/>
+            <RadioButton x:Name="rbModeAllowAdd"
+                         Content="Allow Add (Y)"
+                         Margin="0,0,18,0"/>
+            <RadioButton x:Name="rbModeShowDeleteAdd"
+                         Content="Show Delete+Add (D)"/>
+        </StackPanel>
+
+        <!-- Open Button -->
+        <Button Grid.Row="6"
+                Content="Open Plan Selection"
+                Width="170"
+                HorizontalAlignment="Left"
+                Padding="8,5"
+                Click="OpenPlanSelection_Click"/>
+    </Grid>
+</Window>

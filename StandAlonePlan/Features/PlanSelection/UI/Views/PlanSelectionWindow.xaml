@@ -1,0 +1,112 @@
+<Window x:Class="StandAlonePlan.Features.PlanSelection.UI.Views.PlanSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:StandAlonePlan.Features.PlanSelection.UI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance vm:PlanSelectionViewModel}"
+        Title="Plan Selection"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Width="470"
+        Height="340"
+        FontSize="12">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Column header labels -->
+            <RowDefinition Height="*"/>     <!-- Plan list -->
+            <RowDefinition Height="Auto"/>  <!-- Select row -->
+            <RowDefinition Height="Auto"/>  <!-- Help text -->
+            <RowDefinition Height="Auto"/>  <!-- Navigation buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Column headers: static labels aligned to list content ─────── -->
+        <!-- "CODE" covers the number+code area (10 chars), "PLAN NAME" the rest -->
+        <TextBlock Grid.Row="0"
+                   Text="CODE      PLAN NAME"
+                   FontFamily="Courier New"
+                   FontWeight="SemiBold"
+                   Margin="7,3,0,1"/>
+
+        <!-- ── Plan list: flat text rows, one 35-char string per plan ─────── -->
+        <!-- Mirrors COBOL PLANSLCT-4: PLAN-1..9 PIC X(35) selector fields   -->
+        <ListBox Grid.Row="1"
+                 x:Name="PlanListView"
+                 ItemsSource="{Binding PlanItems}"
+                 SelectedItem="{Binding SelectedPlanItem}"
+                 SelectionMode="Single"
+                 MouseLeftButtonUp="PlanListView_MouseLeftButtonUp"
+                 BorderBrush="#AAAAAA">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="4,2"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FullDisplay}"
+                               FontFamily="Courier New"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- ── Select row ─────────────────────────────────────────────────── -->
+        <!-- PLAN-SELECT PIC X = 1 char; hot-return fires on field-full      -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    Margin="0,6,0,3">
+            <TextBlock Text="Select"
+                       VerticalAlignment="Center"
+                       Width="48"/>
+            <TextBox x:Name="SelectTextBox"
+                     Width="24"
+                     MaxLength="1"
+                     Text="{Binding SelectInput, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="SelectTextBox_TextChanged"
+                     VerticalContentAlignment="Center"/>
+            <Button Margin="8,0,0,0"
+                    Padding="8,2"
+                    Content="Add Plan"
+                    Command="{Binding AddPlanCommand}"
+                    Visibility="{Binding IsAddPlanVisible, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+
+        <!-- ── Help text ──────────────────────────────────────────────────── -->
+        <TextBlock Grid.Row="3"
+                   Text="Select Plans 1-9 or 'C' for Cash or 'P' for Coupon"
+                   FontSize="10"
+                   Foreground="#666666"
+                   Margin="0,2,0,4"/>
+
+        <!-- ── Navigation buttons ─────────────────────────────────────────── -->
+        <!-- Prev / Next collapse when only one page exists                   -->
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="◄ Prev"
+                    Width="60"
+                    Margin="0,0,4,0"
+                    Padding="4,2"
+                    Command="{Binding PrevCommand}"
+                    Visibility="{Binding CanGoPrev, Converter={StaticResource BoolToVis}}"/>
+            <Button Content="Next ►"
+                    Width="60"
+                    Margin="0,0,4,0"
+                    Padding="4,2"
+                    Command="{Binding NextCommand}"
+                    Visibility="{Binding CanGoNext, Converter={StaticResource BoolToVis}}"/>
+            <Button Content="Cancel"
+                    Width="60"
+                    Padding="4,2"
+                    Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
