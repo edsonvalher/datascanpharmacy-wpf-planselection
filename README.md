@@ -660,9 +660,126 @@ flowchart TD
 </details>
 
 <details>
-<summary><strong>MVVM Structure</strong></summary>
+<summary><strong>MVVM Interaction Flow</strong></summary>
 
-[View](/StandAlonePlan/StandAlonePlan/Features/PlanSelection/Documentation/v1/diagrams/mvvm.svg)
+```mermaid
+%%{init:{'theme':'base','themeVariables':{'primaryColor':'#161b24','primaryTextColor':'#e2e8f0','primaryBorderColor':'#1c2433','lineColor':'#64748b','edgeLabelBackground':'#0f1319','fontFamily':'JetBrains Mono, monospace','fontSize':'9px','background':'#080b10'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':60}}}%%
+flowchart LR
+
+    subgraph VIEW ["VIEW — PlanSelectionWindow"]
+        direction TB
+        XAML["PlanSelectionWindow.xaml
+        ---
+        Grid 5 rows
+        ListBox · TextBox · Buttons
+        DataContext = ViewModel"]
+        CB["Code-Behind .cs
+        ---
+        TextChanged → SelectCommand
+        MouseLeftButtonUp → SelectByRow
+        OnKeyDown ESC/F2 → CancelCommand"]
+        XAML --> CB
+    end
+
+    subgraph VM ["VIEWMODEL — PlanSelectionViewModel"]
+        direction TB
+
+        subgraph STATE ["Observable State"]
+            direction LR
+            OB1["PlanItems
+            ObservableCollection"]
+            OB2["SelectInput
+            CanGoPrev · CanGoNext"]
+            OB3["IsAddPlanVisible
+            SelectedPlanItem"]
+        end
+
+        subgraph CMD ["Commands"]
+            direction LR
+            C1["SelectCommand"]
+            C2["AddPlanCommand"]
+            C3["PrevCommand"]
+            C4["NextCommand"]
+            C5["CancelCommand"]
+        end
+
+        EVT["CloseRequested
+        event Action"]
+
+        RESULT["Result
+        PlanSelectionResult"]
+    end
+
+    subgraph MODEL ["MODEL — Domain"]
+
+        subgraph UC ["Use Cases"]
+            direction LR
+            U1["GetPatientPlansUseCase"]
+            U2["SelectPlanUseCase"]
+            U3["AddPlanUseCase"]
+            U4["PaginatePlansUseCase"]
+        end
+
+        subgraph ENT ["Entities"]
+            direction LR
+            E1["Plan"]
+            E2["PlanSelectionMode"]
+            E3["PlanSelectionResult"]
+            E4["PlanPageItem"]
+        end
+
+        subgraph REPO ["Data"]
+            direction LR
+            R1["IPlanRepository"]
+            R2["MockPlanRepository"]
+            R1 --> R2
+        end
+    end
+
+    VIEW -- "bindings\nPropertyChanged" --> VM
+    VM   -- "commands\nCloseRequested"  --> VIEW
+    VM   -- "calls use cases"           --> MODEL
+    MODEL -- "returns entities"         --> VM
+
+    style VIEW  fill:#a78bfa10,stroke:#a78bfa,color:#080b10
+    style VM    fill:#00d4ff10,stroke:#00d4ff,color:#080b10
+    style MODEL fill:#34d39910,stroke:#34d399,color:#080b10
+
+    style STATE fill:#161b2488,stroke:#00d4ff,color:#e2e8f0
+    style CMD   fill:#161b2488,stroke:#00d4ff,color:#e2e8f0
+    style UC    fill:#161b2488,stroke:#34d399,color:#e2e8f0
+    style ENT   fill:#161b2488,stroke:#34d399,color:#e2e8f0
+    style REPO  fill:#161b2488,stroke:#fbbf24,color:#e2e8f0
+
+    style XAML  fill:#080b10,stroke:#a78bfa,color:#e2e8f0
+    style CB    fill:#080b10,stroke:#a78bfa,color:#e2e8f0
+
+    style OB1   fill:#080b10,stroke:#00d4ff,color:#e2e8f0
+    style OB2   fill:#080b10,stroke:#00d4ff,color:#e2e8f0
+    style OB3   fill:#080b10,stroke:#00d4ff,color:#e2e8f0
+
+    style C1    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+    style C2    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+    style C3    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+    style C4    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+    style C5    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+
+    style EVT   fill:#080b10,stroke:#f87171,color:#e2e8f0
+    style RESULT fill:#080b10,stroke:#34d399,color:#e2e8f0
+
+    style U1    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style U2    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style U3    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style U4    fill:#080b10,stroke:#34d399,color:#e2e8f0
+
+    style E1    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style E2    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style E3    fill:#080b10,stroke:#34d399,color:#e2e8f0
+    style E4    fill:#080b10,stroke:#34d399,color:#e2e8f0
+
+    style R1    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+    style R2    fill:#080b10,stroke:#fbbf24,color:#e2e8f0
+```
 
 </details>
 
