@@ -92,14 +92,13 @@ Delete → Corresponding COBOL DLL removed
 | **Unit Test** | 80% | 90% | Business logic is the core — must be well covered |
 | **Integration Test** | 70% | 80% | Covers the main wiring flows between layers |
 | **Contract Test** | 100% | 100% | Every method of IPlanRepository must be validated without exception |
-| **Smoke Test** | 100% | 100% | Few tests — if they exist they must always pass |
 | **E2E Test** | 70% | 85% | Covers happy path and main sad paths — not every edge case |
 | **Regression Test** | 100% | 100% | Every requirement in README must have its test — no exceptions |
 
 ### Coverage Rule
 
 ```
-Contract + Smoke + Regression = 100% always
+Contract + Regression = 100% always
 Unit + Integration            = minimum 80%
 E2E                           = minimum 70%
 ```
@@ -142,7 +141,6 @@ StandAlonePlan/
       PlanSelectionWindowPage.cs
       ResultMessageBoxHelper.cs
       ScreenshotOnFailureHelper.cs
-    Smoke/                                Smoke Tests
     E2E/                                  E2E Tests
     Regression/                           Regression Tests
 ```
@@ -153,8 +151,7 @@ StandAlonePlan/
 
 | Trigger | Tests to Run | Max Duration |
 |---|---|---|
-| Every commit | Smoke Tests | < 2 min |
-| Every PR | Unit + Integration + Contract + Smoke | < 10 min |
+| Every PR | Unit + Integration + Contract | < 10 min |
 | Merge to main | Full suite — all types | < 30 min |
 | Release candidate | Full suite + manual exploratory | No limit |
 | New feature migrated | Regression suite — all previous features | < 30 min |
@@ -186,7 +183,7 @@ No test needs to be modified when switching from Mock to Real.
 |---|---|
 | **xUnit** | Test runner for Unit, Integration, Contract and Regression tests |
 | **Moq** | Mocking framework for Unit tests |
-| **FlaUI** | WPF UI automation for Smoke, E2E and Regression tests |
+| **FlaUI** | WPF UI automation for E2E and Regression tests |
 | **Microsoft.Extensions.DependencyInjection** | Real DI container for Integration tests |
 | **CommunityToolkit.Mvvm** | Observable properties and commands in ViewModel |
 
