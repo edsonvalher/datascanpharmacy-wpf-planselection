@@ -601,7 +601,7 @@ code { font-family: 'DM Mono', monospace; font-size: 11px; background: #e0e7ff; 
         </div>
       </div>
       <div class="card-h">Easiest screens first</div>
-      <p class="card-p">Elegir las pantallas con menos dependencias de otros COBOL programs. Son las más seguras para migrar, pero suelen ser funciones secundarias que el equipo no nota como avance real.</p>
+      <p class="card-p">Choose screens with the fewest dependencies on other COBOL programs. Safest to migrate, but usually secondary features the team does not notice as real progress.</p>
       <div class="pc">
         <div class="pc-col pros">
           <div class="pc-lbl">Pros</div>
@@ -616,7 +616,7 @@ code { font-family: 'DM Mono', monospace; font-size: 11px; background: #e0e7ff; 
           <div class="pc-row"><span class="pc-icon">−</span>Hard to sustain momentum</div>
         </div>
       </div>
-      <div class="ex-chip">◆ SETPLAN.CBL — ejemplo real de esta opción</div>
+      <div class="ex-chip">◆ SETPLAN.CBL — real example of this option</div>
       <div class="cx">
         <span class="cx-lbl">Complexity</span>
         <div class="cx-track"><div class="cx-fill low"></div></div>
@@ -794,6 +794,35 @@ code { font-family: 'DM Mono', monospace; font-size: 11px; background: #e0e7ff; 
 
   <div class="callout">
     <strong>The concrete question:</strong> If the newly deployed C# screen fails in production, how long does recovery take? How clean is the architecture while they coexist?
+  </div>
+
+  <!-- ScreenIO Constraint -->
+  <div class="block" style="border-left: 3px solid var(--amber); background: var(--amber-bg); border-radius: 0 12px 12px 0;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+      <div style="width:28px;height:28px;border-radius:6px;background:var(--amber-bg);border:1px solid var(--amber-bdr);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">⚠</div>
+      <div style="font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--amber);">ScreenIO Constraint — What makes this migration different</div>
+    </div>
+    <p style="font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:14px;">
+      Winpharm screens are not plain COBOL screens. They are rendered by <strong style="color:var(--tx1)">ScreenIO (GS Runtime Rev 9)</strong>, a third-party framework by Greenhouse Software that owns the entire event loop. This changes the nature of coexistence completely.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:rgba(255,255,255,0.6);border:1px solid var(--amber-bdr);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Cannot do</div>
+        <div style="font-size:12px;color:var(--tx2);display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--red);flex-shrink:0;">✗</span>Call a ScreenIO screen from C# — ScreenIO has no API for that</div>
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--red);flex-shrink:0;">✗</span>Mix ScreenIO and WPF in the same window — they are separate rendering systems</div>
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--red);flex-shrink:0;">✗</span>Show half a COBOL screen and half a WPF screen side by side</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.6);border:1px solid var(--amber-bdr);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">How it actually works</div>
+        <div style="font-size:12px;color:var(--tx2);display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--green);flex-shrink:0;">✓</span>Coexistence happens at the <strong style="color:var(--tx1)">process and data level</strong>, not visually</div>
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--green);flex-shrink:0;">✓</span>Migrated screens open in WPF — non-migrated screens still open in ScreenIO</div>
+          <div style="display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--green);flex-shrink:0;">✓</span>Each migrated feature is a <strong style="color:var(--tx1)">complete self-contained replacement</strong>, not an overlay</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="cards">
@@ -1192,7 +1221,7 @@ code { font-family: 'DM Mono', monospace; font-size: 11px; background: #e0e7ff; 
           <div class="cycle-dot">01</div>
           <div class="cycle-text">
             <strong>Identify screens in the domain</strong>
-            <span>Mapear todos los COBOL programs involucrados</span>
+            <span>Map all involved COBOL programs</span>
           </div>
         </div>
         <div class="cycle-step cycle-done">
@@ -1309,7 +1338,7 @@ code { font-family: 'DM Mono', monospace; font-size: 11px; background: #e0e7ff; 
 
   <div class="sec-header">
     <div>
-      <div class="sec-title">How TDD works<br>en esta migración</div>
+      <div class="sec-title">How TDD works<br>in this migration</div>
       <p class="sec-sub">In a COBOL migration there is no external documentation — the COBOL source code <em>is</em> the specification. TDD is how we capture that behavior before replacing it.</p>
     </div>
     <div class="sec-meta">
