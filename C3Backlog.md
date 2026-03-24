@@ -9,7 +9,7 @@ Decomposition of all containers identified in C2 into their internal components.
 | # | Container | Technology | C3 Covers |
 |---|---|---|---|
 | [C3-AS-01](C3-AS-01.md) | Winpharm Application | COBOL + ScreenIO | Clinical domains broken down by COBOL program groups (Prescriptions, Patients, Insurance, Transmit, Auto-Refill, Compounding, Labels, Nurse/MTM, Workflow) |
-| C3-AS-02 | POS Application | WinForms .NET | Commercial modules broken down by WinForms screen groups (Checkout, Payments, Inventory, Accounts, Reports, Employees, Shipping, Delivery) |
+| [C3-AS-02](C3-AS-02.md) | POS Application | WinForms .NET | Commercial modules broken down by WinForms screen groups (Checkout, Payments, Inventory, Accounts, Reports, Employees, Shipping, Delivery) |
 | C3-AS-03 | COBOL DLL Bridge | Compiled COBOL DLLs | 8 compiled DLLs with their responsibilities, entry points, and which layer calls each one |
 | C3-AS-04 | Datascan .NET Layer | C# net48 / net8 | 9 C# projects and their Clean Architecture roles (Core / Application / Interop / Database / WPF) |
 
