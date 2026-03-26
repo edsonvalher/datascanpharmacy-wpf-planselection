@@ -22,5 +22,4 @@ Decomposition of all containers identified in C2 into their internal components.
 | C3-TO-01 | Winpharm WPF Application | C# WPF — Clean Architecture | C3-AS-01 | Clinical domains migrated to WPF — one feature per COBOL screen |
 | C3-TO-02 | POS WPF Application | C# WPF — Clean Architecture | C3-AS-02 | Commercial modules migrated to WPF — one feature per WinForms screen |
 | C3-TO-03 | Application Services Layer | C# — Use Cases | C3-AS-04 | Use case classes per clinical and commercial domain — replaces COBOL business logic |
-| C3-TO-04 | Repository / Database Layer | C# + SQL | C3-AS-03 | ISAM file → SQL table mapping — one repository interface per data domain |
 
